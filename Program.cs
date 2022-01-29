@@ -36,9 +36,9 @@ namespace Loading_Spinner
             await ControlLoadingSpinner();
 
             //WriteLine("Loading");
-            CustomWrite.WriteLine(DisplayMessage.Success.FinishedLoading);
+            CustomWrite.WriteLine(DisplayMessage.Success.finishedLoading);
             Console.CursorVisible = true;
-            CustomWrite.WriteLine(DisplayMessage.Quit.PromptPressAnyKey);
+            CustomWrite.WriteLine(DisplayMessage.Quit.promptPressAnyKey);
 
             Console.ReadKey();
 

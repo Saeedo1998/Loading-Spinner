@@ -14,7 +14,7 @@ namespace Loading_Spinner
             {
                 if (input.Any(c => char.IsLetter(c)))
                 {
-                    CustomWrite.WriteLine(DisplayMessage.Error.ValueCannotBeLetter);
+                    CustomWrite.WriteLine(DisplayMessage.Error.valueCannotBeLetter);
                     return false;
                 }
 
