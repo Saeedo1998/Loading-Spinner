@@ -16,6 +16,7 @@ namespace Loading_Spinner
             Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
             Console.WriteLine(text);
             Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
+
         }
     }
 }
