@@ -5,101 +5,129 @@ namespace Loading_Spinner
     class Program
     {
         public static Stopwatch stopwatch = new();
-        public static int primaryCursPosLeft = 50;
-        public static int primaryCursPosTop = 9;
+
         public static int loadingFramesDuration = 75; // (MilliSeconds)
+        public static float s_loadingDurationInMilliSeconds;
         static async Task Main(string[] args)
         {
             Console.CursorVisible = true;
 
-
-            Console.SetCursorPosition(primaryCursPosLeft, primaryCursPosTop);
-            Console.WriteLine("Load for (seconds):");
-            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
-            float userNum = 1; // 1 as default
-            do
+            new Thread(() =>
             {
-                var input = Console.ReadLine();
-                if (input.Any(c => char.IsLetter(c)))
-                {
-                    Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
-                    Console.WriteLine("Value cannot be a letter");
-                    Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
+                Thread.CurrentThread.IsBackground = true;
+                ShowElapsedTime();
+            }).Start();
 
-                }
-                else
-                {
-                    userNum = float.Parse(input);
-                    break;
-                }
-            } while (true);
-            float milliSeconds = userNum * 1000;
+            Console.SetCursorPosition(CustomWrite.primaryCursPosLeft, CustomWrite.primaryCursPosTop);
+            Console.WriteLine("Load for (seconds):");
+            Console.SetCursorPosition(CustomWrite.primaryCursPosLeft, Console.CursorTop + 1);
+
+
+            s_loadingDurationInMilliSeconds = GetUserInput() * 1000;
 
             Console.CursorVisible = false;
-            await ShowLoading(milliSeconds);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                /* run your code here */
+                ControlStopWatch();
+            }).Start();
+            
+            await ControlLoadingSpinner();
 
             //WriteLine("Loading");
-            WriteLine("Finished Loading");
-            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
+            CustomWrite.WriteLine(DisplayMessage.Success.FinishedLoading);
             Console.CursorVisible = true;
-            Console.WriteLine("Press any key to exit..");
-            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
+            CustomWrite.WriteLine(DisplayMessage.Quit.PromptPressAnyKey);
 
             Console.ReadKey();
 
         }
 
-        static void WriteLine(string text)
+        
+
+        static float GetUserInput()
         {
-            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
-            Console.WriteLine(text);
-            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
-
-
+            float num;
+            do
+            {
+                var input = Console.ReadLine();
+                if (Validate.IsInputLetter(input))
+                {
+                    num = float.Parse(input);
+                    return num;
+                }
+            } while (true);
         }
 
-        static async Task ShowLoading(float loadingDurationInMilliSeconds)
+        static async Task ControlLoadingSpinner()
         {
-            float segmentedLoadingDuration = loadingDurationInMilliSeconds / 600;
-
-            stopwatch.Start();
+            //float segmentedLoadingDuration = loadingDurationInMilliSeconds / 600;
             //var t = Task.Run(() => ShowElapsedTime());
             //t.Wait();
             //ShowElapsedTime();
+            //new Thread(() =>
+            //{
+            //    Thread.CurrentThread.IsBackground = true;
+            //    /* run your code here */
 
-            for (float i = 0; i < segmentedLoadingDuration; i++)
+            //}).Start();
+
+            //if enough time has passed as per user input
+            
+            do
             {
+                if (stopwatch.IsRunning)
+                {
+                    CustomWrite.WriteLine(" / Loading \\ ");
+                    //System.Threading.Thread.Sleep(150);
+                    await Task.Delay(loadingFramesDuration);
+                    //Console.Clear();
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
+                    CustomWrite.WriteLine(" - Loading | ");
+                    await Task.Delay(loadingFramesDuration);
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
+                    CustomWrite.WriteLine(" \\ Loading / ");
+                    await Task.Delay(loadingFramesDuration);
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
+                    CustomWrite.WriteLine(" | Loading - ");
+                    await Task.Delay(loadingFramesDuration);
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
+                }
+                else
+                {
+                    break;
+                }
 
-
-                WriteLine(" / Loading \\ ");
-                //System.Threading.Thread.Sleep(150);
-                await Task.Delay(loadingFramesDuration);
-                //Console.Clear();
-                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
-                WriteLine(" - Loading | ");
-                await Task.Delay(loadingFramesDuration);
-                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
-                WriteLine(" \\ Loading / ");
-                await Task.Delay(loadingFramesDuration);
-                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
-                WriteLine(" | Loading - ");
-                await Task.Delay(loadingFramesDuration);
-                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop - 3);
-
-            }
-
-
+            } while (true);
         }
 
-        public static Task<string> ShowElapsedTime()
+        static async Task ShowElapsedTime()
         {
             do
             {
-                return Task.FromResult(Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString());
+                if (stopwatch.IsRunning)
+                {
+                    Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString() + "user specified time: " + s_loadingDurationInMilliSeconds;
+                    //return Task.FromResult(Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString());
+                }
             }
             while (true);
 
 
+        }
+
+        static async Task ControlStopWatch()
+        {
+            stopwatch.Start();
+
+            do
+            {
+                if (stopwatch.ElapsedMilliseconds >= s_loadingDurationInMilliSeconds)
+                {
+                    stopwatch.Stop();
+                }
+            } while (true);
         }
 
 
