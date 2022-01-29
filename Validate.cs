@@ -19,7 +19,6 @@ namespace Loading_Spinner
                 }
 
                 return true;
-
             }
         //}
         
