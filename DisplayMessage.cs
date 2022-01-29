@@ -10,19 +10,19 @@ namespace Loading_Spinner
     {
         public static class Error
         {
-            public static string ValueCannotBeLetter = "Value cannot be a letter";
-            public static string ValueCannotBeEmpty = "Value cannot empty";
+            public static string valueCannotBeLetter = "Value cannot be a letter";
+            public static string valueCannotBeEmpty = "Value cannot empty";
         }
 
         public static class Success
         {
-            public static string FinishedLoading = "Finished Loading";
+            public static string finishedLoading = "Finished Loading";
         }
 
         public static class Quit
         {
-            public static string PromptPressAnyKey = "Press any key to exit..";
-            public static string PromptHeadsUp = "Are you sure you want to exit? ( Y / N )";
+            public static string promptPressAnyKey = "Press any key to exit..";
+            public static string promptHeadsUp = "Are you sure you want to exit? ( Y / N )";
 
         }
 
