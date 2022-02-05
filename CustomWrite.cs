@@ -11,6 +11,12 @@ namespace Loading_Spinner
         public static int primaryCursPosLeft = 50;
         public static int primaryCursPosTop = 9;
 
+        public static void WriteFirstLine(string text)
+        {
+            Console.SetCursorPosition(primaryCursPosLeft, primaryCursPosTop);
+            Console.WriteLine(text);
+            Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
+        }
         public static void WriteLine(string text)
         {
             Console.SetCursorPosition(primaryCursPosLeft, Console.CursorTop + 1);
