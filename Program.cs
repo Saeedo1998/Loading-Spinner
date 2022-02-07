@@ -8,9 +8,16 @@ namespace Loading_Spinner
         public static Stopwatch stopwatch = new();
 
         public static int loadingFramesDuration = 75; // (MilliSeconds)
-        public static float s_loadingDurationInMilliSeconds;
+        public static float f_loadingDurationInMilliSeconds;
+
+        public static string s_AppName;
         static async Task Main(string[] args)
         {
+            //Initialize program
+            var myType = typeof(Program);
+            s_AppName = myType.Namespace;
+            Console.Title = s_AppName;
+
             Console.CursorVisible = true;
 
             new Thread(() =>
@@ -21,7 +28,7 @@ namespace Loading_Spinner
 
             CustomWrite.WriteFirstLine("Load for (seconds):");
 
-            s_loadingDurationInMilliSeconds = GetUserInput() * 1000;
+            f_loadingDurationInMilliSeconds = GetUserInput() * 1000;
 
             Console.CursorVisible = false;
             new Thread(() =>
@@ -41,8 +48,8 @@ namespace Loading_Spinner
 
             if (Console.ReadKey().Key == ConsoleKey.Y)
             {
-                //RestartProgram();
-                CustomWrite.WriteLine(Assembly.GetExecutingAssembly().Location);
+                RestartProgram();
+                //CustomWrite.WriteLine(Assembly.GetExecutingAssembly().Location);
             }
 
             //else 
@@ -50,6 +57,10 @@ namespace Loading_Spinner
             //exit program
             
 
+        }
+        public string GetThisNamespace()
+        {
+            return GetType().Namespace;
         }
 
         static void RestartProgram()
@@ -66,6 +77,16 @@ namespace Loading_Spinner
             //throws error
             //var fileName = Assembly.GetExecutingAssembly().Location;
             //Process.Start(fileName);
+
+
+            Console.Clear();
+            Console.Title = s_AppName;
+
+            //Start process, friendly name is something like MyApp.exe (from current bin directory)
+            Process.Start(AppDomain.CurrentDomain.FriendlyName);
+
+            //Close the current process
+            Environment.Exit(0);
         }
 
         static float GetUserInput()
@@ -145,7 +166,7 @@ namespace Loading_Spinner
 
             do
             {
-                if (stopwatch.ElapsedMilliseconds >= s_loadingDurationInMilliSeconds)
+                if (stopwatch.ElapsedMilliseconds >= f_loadingDurationInMilliSeconds)
                 {
                     stopwatch.Stop();
                 }
