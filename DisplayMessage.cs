@@ -26,6 +26,13 @@ namespace Loading_Spinner
 
         }
 
+        public static class Program
+        {
+            public static string promptRestart = "Restart? (Y) or press any key to exit...";
+
+        }
+
+
     }
 }
 
