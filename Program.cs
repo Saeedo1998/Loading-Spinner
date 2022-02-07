@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace Loading_Spinner
 {
@@ -38,13 +39,37 @@ namespace Loading_Spinner
             //WriteLine("Loading");
             CustomWrite.WriteLine(DisplayMessage.Success.finishedLoading);
             Console.CursorVisible = true;
-            CustomWrite.WriteLine(DisplayMessage.Quit.promptPressAnyKey);
+            //CustomWrite.WriteLine(DisplayMessage.Quit.promptPressAnyKey);
+            CustomWrite.WriteLine(DisplayMessage.Program.promptRestart);
 
-            Console.ReadKey();
+            if (Console.ReadKey().Key == ConsoleKey.Y)
+            {
+                //RestartProgram();
+                CustomWrite.WriteLine(Assembly.GetExecutingAssembly().Location);
+            }
+
+            //else 
+
+            //exit program
+            
 
         }
 
-        
+        static void RestartProgram()
+        {
+            //incompatible for some reason
+            // Starts a new instance of the program itself
+            //System.Diagnostics.Process.Start(Application.ExecutablePath);
+
+            // Closes the current process
+            //Environment.Exit(0);
+
+
+
+            //throws error
+            //var fileName = Assembly.GetExecutingAssembly().Location;
+            //Process.Start(fileName);
+        }
 
         static float GetUserInput()
         {
@@ -108,7 +133,7 @@ namespace Loading_Spinner
             {
                 if (stopwatch.IsRunning)
                 {
-                    Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString() + "user specified time: " + s_loadingDurationInMilliSeconds;
+                    Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString();/* + "user specified time: " + s_loadingDurationInMilliSeconds;*/
                     //return Task.FromResult(Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString());
                 }
             }
