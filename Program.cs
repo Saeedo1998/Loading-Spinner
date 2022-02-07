@@ -19,10 +19,7 @@ namespace Loading_Spinner
                 ShowElapsedTime();
             }).Start();
 
-            Console.SetCursorPosition(CustomWrite.primaryCursPosLeft, CustomWrite.primaryCursPosTop);
-            Console.WriteLine("Load for (seconds):");
-            Console.SetCursorPosition(CustomWrite.primaryCursPosLeft, Console.CursorTop + 1);
-
+            CustomWrite.WriteFirstLine("Load for (seconds):");
 
             s_loadingDurationInMilliSeconds = GetUserInput() * 1000;
 
