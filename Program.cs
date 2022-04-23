@@ -37,7 +37,7 @@ namespace Loading_Spinner
                 /* run your code here */
                 ControlStopWatch();
             }).Start();
-            
+
             await ControlLoadingSpinner();
 
             //WriteLine("Loading");
@@ -55,7 +55,7 @@ namespace Loading_Spinner
             //else 
 
             //exit program
-            
+
 
         }
         public string GetThisNamespace()
@@ -117,7 +117,7 @@ namespace Loading_Spinner
             //}).Start();
 
             //if enough time has passed as per user input
-            
+
             do
             {
                 if (stopwatch.IsRunning)
@@ -151,7 +151,8 @@ namespace Loading_Spinner
             {
                 if (stopwatch.IsRunning)
                 {
-                    Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString();/* + "user specified time: " + s_loadingDurationInMilliSeconds;*/
+                    Console.Title = s_AppName +
+                        " - Time elapsed: " + stopwatch.Elapsed.Seconds.ToString();/* + "user specified time: " + s_loadingDurationInMilliSeconds;*/
                     //return Task.FromResult(Console.Title = "Time elapsed: " + stopwatch.Elapsed.Seconds.ToString());
                 }
             }
